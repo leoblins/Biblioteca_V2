@@ -53,4 +53,11 @@
         </div>
     </footer>
 </body>
+{% if messages %}
+  <div class="mensagens-container">
+    {% for message in messages %}
+      <div class="mensagem {{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+  </div>
+{% endif %}
 </html>

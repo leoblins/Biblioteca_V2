@@ -5,6 +5,12 @@ from django.db.models import Q
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+import urllib.request
+from django.core.files import File
+from django.core.files.temp import NamedTemporaryFile
+import os
+
 
 @login_required
 def home(request):
@@ -51,11 +57,20 @@ def adicionar_livro(request):
         if form.is_valid():
             livro = form.save(commit=False)
             livro.usuario = request.user
+
+            # Se o usuário não fez upload mas colou um link
+            url_capa = form.cleaned_data.get('url_capa')
+            if url_capa and not request.FILES.get('capa'):
+                livro.capa.save('capa_baixada.jpg', baixar_imagem(url_capa))
+
             livro.save()
+            messages.success(request, 'Livro adicionado com sucesso!')
             return redirect('home')
     else:
         form = LivroForm()
     return render(request, 'livros/adicionar_livro.html', {'form': form})
+
+
 
 
 @login_required
@@ -65,10 +80,34 @@ def editar_livro(request, pk):
 
     if request.method == 'POST':
         if form.is_valid():
-            form.save()
+            livro = form.save(commit=False)
+            nova_url = form.cleaned_data.get('url_capa')
+
+            if nova_url:
+                try:
+                    if livro.capa:
+                        livro.capa.delete(save=False)
+
+                    img_temp = NamedTemporaryFile()  # ← aqui sem o 'delete=True'
+                    with urllib.request.urlopen(nova_url) as u:
+                        img_temp.write(u.read())
+                    img_temp.flush()
+
+                    livro.capa.save(os.path.basename(nova_url), File(img_temp), save=False)
+                except Exception as e:
+                    messages.error(request, f'Erro ao baixar imagem da URL: {e}')
+
+            livro.usuario = request.user
+            livro.save()
+            messages.success(request, 'Livro editado com sucesso!')
             return redirect('home')
 
     return render(request, 'livros/editar_livro.html', {'form': form})
+
+
+ 
+
+
 
 
 
@@ -77,8 +116,10 @@ def excluir_livro(request, id):
     livro = get_object_or_404(Livro, id=id, usuario=request.user)
     if request.method == 'POST':
         livro.delete()
+        messages.success(request, 'Livro excluído com sucesso!')
         return redirect('home')
     return render(request, 'livros/excluir_livro.html', {'livro': livro})
+
 
 
 @login_required
@@ -97,3 +138,10 @@ def registro(request):
     else:
         form = UserCreationForm()
     return render(request, 'livros/registro.html', {'form': form})
+
+def baixar_imagem(url):
+    img_temp = NamedTemporaryFile()  # ✅ Corrigido
+    with urllib.request.urlopen(url) as u:
+        img_temp.write(u.read())
+    img_temp.flush()
+    return File(img_temp)

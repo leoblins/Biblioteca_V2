@@ -4,9 +4,11 @@
 {% block content %}
 <div class="form-container">
     <h2>Adicionar Livro</h2>
+
     <div style="text-align: center; margin-bottom: 20px;">
         <a href="{% url 'home' %}" class="btn-voltar">← Voltar à Página Inicial</a>
     </div>
+
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
 
@@ -35,9 +37,19 @@
             {{ form.local }}
         </div>
 
+        <!-- Upload manual da capa -->
         <div>
-            <label for="{{ form.capa.id_for_label }}">Capa:</label>
+            <label for="{{ form.capa.id_for_label }}">Enviar imagem da capa:</label>
             {{ form.capa }}
+        </div>
+
+        <!-- OU: colar URL da imagem -->
+        <p style="text-align: center; margin: 10px 0;">ou</p>
+
+        <div>
+            <label for="{{ form.url_capa.id_for_label }}">Colar URL da imagem da capa:</label>
+            {{ form.url_capa }}
+            <small style="color: #777;">(Clique com o botão direito em uma imagem e selecione “Copiar endereço da imagem”)</small>
         </div>
 
         <div>
