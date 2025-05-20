@@ -1,0 +1,73 @@
+{% extends 'livros/base.html' %}
+{% block title %}Editar Livro{% endblock %}
+
+{% block content %}
+<h2>Editar Livro</h2>
+
+<form method="post" enctype="multipart/form-data" style="max-width: 500px;">
+    {% csrf_token %}
+
+    <div style="margin-bottom: 12px;">
+        <label for="{{ form.nome.id_for_label }}">Nome:</label><br>
+        {{ form.nome }}
+    </div>
+
+    <div style="margin-bottom: 12px;">
+        <label for="{{ form.autor.id_for_label }}">Autor:</label><br>
+        {{ form.autor }}
+    </div>
+
+    <div style="margin-bottom: 12px;">
+        <label for="{{ form.descricao.id_for_label }}">Descrição:</label><br>
+        {{ form.descricao }}
+    </div>
+
+    <div style="margin-bottom: 12px;">
+        <label for="{{ form.local.id_for_label }}">Local:</label><br>
+        {{ form.local }}
+    </div>
+
+    <div style="margin-bottom: 12px;">
+        <label for="{{ form.capa.id_for_label }}">Capa:</label><br>
+        {{ form.capa }}
+    </div>
+
+    <div style="margin-bottom: 12px;">
+        <label for="{{ form.nota.id_for_label }}">Nota:</label><br>
+        {{ form.nota }}
+    </div>
+
+    <div style="margin-bottom: 12px;">
+        <label for="{{ form.lido.id_for_label }}">Já leu?</label><br>
+        {{ form.lido }}
+    </div>
+
+    <div style="margin-bottom: 12px;">
+        <label for="{{ form.preco.id_for_label }}">Preço:</label><br>
+        {{ form.preco }}
+    </div>
+
+    <div style="margin-bottom: 12px;">
+        <label for="{{ form.onde_comprar_nome.id_for_label }}">Loja (ex: Amazon):</label><br>
+        {{ form.onde_comprar_nome }}
+    </div>
+
+    <div style="margin-bottom: 12px;">
+        <label for="{{ form.onde_comprar_link.id_for_label }}">Link da loja:</label><br>
+        {{ form.onde_comprar_link }}
+    </div>
+
+    <button type="submit" style="padding: 6px 12px;">Salvar Alterações</button>
+    <a href="{% url 'home' %}">
+        <button type="button" style="background-color: gray; color: white; padding: 6px 12px;">Cancelar</button>
+    </a>
+
+    <p><label for="{{ form.desejado.id_for_label }}">Deseja comprar?</label> {{ form.desejado }}</p>
+
+    <div style="margin-bottom: 12px;">
+    <label for="{{ form.genero.id_for_label }}">Gênero:</label><br>
+    {{ form.genero }}
+ </div>
+
+</form>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'livros/base.html' %}
+{% block title %}Excluir Livro{% endblock %}
+
+{% block content %}
+<h2>Excluir Livro</h2>
+
+<p>Tem certeza que deseja excluir o livro <strong>"{{ livro.nome }}"</strong>?</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" style="background-color: crimson; color: white;">Sim, excluir</button>
+    <a href="{% url 'home' %}">
+        <button type="button" style="background-color: gray; color: white;">Cancelar</button>
+    </a>
+</form>
+{% endblock %}

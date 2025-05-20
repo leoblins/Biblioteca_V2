@@ -1,0 +1,39 @@
+{% extends 'livros/base.html' %}
+{% load static %}
+
+{% block title %}{{ livro.nome }} - Detalhes{% endblock %}
+
+{% block content %}
+<div class="detalhes-container">
+    <div class="capa-detalhe">
+        {% if livro.capa %}
+        <img src="{{ livro.capa.url }}" alt="Capa de {{ livro.nome }}" class="capa-zoom">
+        {% else %}
+        <img src="{% static 'livros/imagem_padrao.png' %}" alt="Capa não disponível" class="capa-zoom">
+        {% endif %}
+    </div>
+
+    <div class="info-livro">
+        <h2>{{ livro.nome }}</h2>
+        <p><strong>Autor:</strong> {{ livro.autor }}</p>
+        <p><strong>Descrição:</strong> {{ livro.descricao }}</p>
+        <p><strong>Nota:</strong> {{ livro.nota }}</p>
+        <p><strong>Lido:</strong> {% if livro.lido %}Sim ✅{% else %}Não ❌{% endif %}</p>
+        <p><strong>Preço:</strong> R$ {{ livro.preco }}</p>
+        {% if livro.onde_comprar_nome and livro.onde_comprar_link %}
+<p><strong>Onde comprar:</strong>
+    <a href="{{ livro.onde_comprar_link }}" target="_blank" style="color: #007BFF; text-decoration: underline;">
+        {{ livro.onde_comprar_nome }}
+    </a>
+</p>
+{% else %}
+<p><strong>Onde comprar:</strong> Não informado</p>
+{% endif %}
+
+
+        <a href="{% url 'editar_livro' livro.id %}" class="btn-editar">✏️ Editar livro</a>
+        <button class="voltar" onclick="window.history.back()">← Voltar</button>
+    </div>
+</div>
+{% endblock %}
+

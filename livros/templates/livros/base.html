@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Biblioteca do Pai{% endblock %}</title>
+
+    <!-- CSS do Swiper.js -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+
+    <!-- Seu CSS personalizado -->
+    <link rel="stylesheet" href="{% static 'livros/style.css' %}">
+</head>
+<body>
+
+    <div style="text-align: right; padding: 10px;">
+    {% if request.user.is_authenticated %}
+        <span>Bem-vindo, {{ request.user.username }}!</span>
+        <form action="{% url 'logout' %}" method="post" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" style="margin-left: 10px;">Sair</button>
+        </form>
+    {% endif %}
+</div>
+
+    <div class="container">
+        {% block content %}
+        <!-- O conteúdo específico de cada página será inserido aqui -->
+        {% endblock %}
+    </div>
+
+    <!-- JS do Swiper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+
+    {% block scripts %}
+    <!-- Bloco para scripts específicos da página -->
+    {% endblock %}
+</body>
+</html>
