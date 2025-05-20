@@ -1,63 +1,60 @@
 {% extends 'livros/base.html' %}
 {% load static %}
 
-{% block title %}Início - Biblioteca do Pai{% endblock %}
+
 
 {% block content %}
 
-<form method="get" action="{% url 'home' %}" style="margin-bottom: 20px; display: flex; gap: 8px;">
-    <input type="text" name="q" placeholder="Buscar por nome ou autor..." value="{{ request.GET.q }}" style="padding: 6px; width: 250px;">
-    <button type="submit" style="padding: 6px 12px;">Buscar</button>
+<form method="get" action="{% url 'home' %}" style="margin-bottom: 20px; display: flex; flex-wrap: wrap; gap: 8px;">
 
-    <div style="margin-bottom: 15px;">
-    <strong>Filtrar por autor:</strong>
-    {% for autor in autores %}
-        <a href="?autor={{ autor }}" style="margin-right: 10px;">
-            <button type="button"
-                style="padding: 6px 10px; {% if autor == autor_filtro %}background-color: #333; color: white;{% endif %}">
-                {{ autor }}
-            </button>
-        </a>
-    {% endfor %}
-    
+    <input type="text" name="q" placeholder="Buscar por nome ou autor..." value="{{ request.GET.q }}" style="padding: 6px; width: 250px;">
+    <button type="submit">Buscar</button>
+
+    <!-- Filtro por autor -->
+    <div class="dropdown">
+        <button type="button" class="dropbtn">Filtrar por autor</button>
+        <div class="dropdown-content">
+            {% for autor in autores %}
+                <a href="?autor={{ autor }}{% if request.GET.genero %}&genero={{ request.GET.genero }}{% endif %}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{{ autor }}</a>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Filtro por gênero -->
+    <div class="dropdown">
+        <button type="button" class="dropbtn">Filtrar por gênero</button>
+        <div class="dropdown-content">
+            {% for genero in generos %}
+                {% if genero %}
+                <a href="?genero={{ genero }}{% if request.GET.autor %}&autor={{ request.GET.autor }}{% endif %}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{{ genero }}</a>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Botões para limpar filtros individualmente -->
     {% if autor_filtro %}
-        <a href="{% url 'home' %}">
-            <button type="button" style="padding: 6px 12px; background-color: #ccc;">Limpar filtro de autor</button>
+        <a href="?{% if request.GET.genero %}genero={{ request.GET.genero }}&{% endif %}{% if request.GET.q %}q={{ request.GET.q }}{% endif %}">
+            <button type="button" class="clear-btn">✖ Limpar filtro de autor</button>
         </a>
     {% endif %}
-</div>
-    
-<div style="margin-bottom: 15px;">
-    <strong>Filtrar por gênero:</strong>
-    {% for genero in generos %}
-        {% if genero %}
-        <a href="?genero={{ genero }}" style="margin-right: 10px;">
-            <button type="button"
-                style="padding: 6px 10px; {% if genero == genero_filtro %}background-color: #333; color: white;{% endif %}">
-                {{ genero }}
-            </button>
-        </a>
-        {% endif %}
-    {% endfor %}
 
     {% if genero_filtro %}
-        <a href="{% url 'home' %}">
-            <button type="button" style="padding: 6px 12px; background-color: #ccc;">Limpar filtro de gênero</button>
+        <a href="?{% if request.GET.autor %}autor={{ request.GET.autor }}&{% endif %}{% if request.GET.q %}q={{ request.GET.q }}{% endif %}">
+            <button type="button" class="clear-btn">✖ Limpar filtro de gênero</button>
         </a>
     {% endif %}
-</div>
 
     {% if request.GET.q %}
-    <a href="{% url 'home' %}">
-        <button type="button" style="padding: 6px 12px; background-color: #ccc;">Limpar</button>
-    </a>
+        <a href="?{% if request.GET.autor %}autor={{ request.GET.autor }}&{% endif %}{% if request.GET.genero %}genero={{ request.GET.genero }}{% endif %}">
+            <button type="button" class="clear-btn">✖ Limpar</button>
+        </a>
     {% endif %}
 </form>
 
-
 <div class="cabecalho-centralizado">
     <h1>Biblioteca</h1>
-    <h3>jsBarbosa</h3>
+    <!-- <h3>jsBarbosa</h3> -->
     <button type="button" class="btn-add" onclick="location.href='{% url 'adicionar_livro' %}'">
         + Adicionar Livro
     </button>
@@ -65,41 +62,49 @@
 
 {% for local, livros_local in locais.items %}
     <h2>{{ local }} ({{ livros_local|length }} livro{{ livros_local|length|pluralize }})</h2>
+    <p class="arraste-dica">Arraste para o lado ⟶</p>
+
 
     <div class="swiper swiper-{{ forloop.counter }}">
         <div class="swiper-wrapper">
             {% for livro in livros_local %}
             <div class="swiper-slide">
-                <a href="{% url 'detalhes_livro' livro.id %}">
-    {% if livro.capa %}
-    <img src="{{ livro.capa.url }}" alt="{{ livro.nome }}" class="capa-zoom">
-    {% else %}
-    <img src="{% static 'livros/imagem_padrao.png' %}" alt="Capa não disponível" class="capa-zoom">
-    {% endif %}
-</a>
 
+                <!-- Badge Lido/Não lido -->
+                {% if livro.lido %}
+                    <div class="selo-lido">Lido</div>
+                {% else %}
+                    <div class="selo-nao-lido">Não lido</div>
+                {% endif %}
+
+                <!-- Capa clicável -->
+                <a href="{% url 'detalhes_livro' livro.id %}">
+                    {% if livro.capa %}
+                        <img src="{{ livro.capa.url }}" alt="{{ livro.nome }}" class="capa-zoom">
+                    {% else %}
+                        <img src="{% static 'livros/imagem_padrao.png' %}" alt="Capa não disponível" class="capa-zoom">
+                    {% endif %}
+                </a>
+
+                <!-- Título e autor -->
                 <div class="titulo-livro">
                     <strong>{{ livro.nome }}</strong><br>
                     <span>Autor: {{ livro.autor }}</span><br>
-                    <span>Nota: {{ livro.nota }}</span>
-                    <p>
-                        {% if livro.lido %}
-                        <strong>Lido ✅</strong>
-                        {% else %}
-                        <strong>Não lido ❌</strong>
-                        {% endif %}
-                    </p>
+                    <span>Nota: {{ livro.nota|default:"-" }}</span>
                 </div>
 
+                <!-- Botões -->
                 <div class="botoes">
                     <button class="editar" onclick="location.href='{% url 'editar_livro' livro.id %}'">Editar</button>
                     <button class="excluir" onclick="location.href='{% url 'excluir_livro' livro.id %}'">Excluir</button>
                 </div>
+
             </div>
             {% endfor %}
         </div>
     </div>
 {% endfor %}
+
 {% endblock %}
 
 {% block scripts %}

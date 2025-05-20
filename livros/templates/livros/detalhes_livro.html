@@ -5,35 +5,35 @@
 
 {% block content %}
 <div class="detalhes-container">
-    <div class="capa-detalhe">
+    <div>
         {% if livro.capa %}
-        <img src="{{ livro.capa.url }}" alt="Capa de {{ livro.nome }}" class="capa-zoom">
+            <img src="{{ livro.capa.url }}" alt="{{ livro.nome }}" class="capa-zoom">
         {% else %}
-        <img src="{% static 'livros/imagem_padrao.png' %}" alt="Capa não disponível" class="capa-zoom">
+            <img src="{% static 'livros/imagem_padrao.png' %}" alt="Capa não disponível" class="capa-zoom">
         {% endif %}
     </div>
 
     <div class="info-livro">
         <h2>{{ livro.nome }}</h2>
-        <p><strong>Autor:</strong> {{ livro.autor }}</p>
-        <p><strong>Descrição:</strong> {{ livro.descricao }}</p>
-        <p><strong>Nota:</strong> {{ livro.nota }}</p>
-        <p><strong>Lido:</strong> {% if livro.lido %}Sim ✅{% else %}Não ❌{% endif %}</p>
-        <p><strong>Preço:</strong> R$ {{ livro.preco }}</p>
-        {% if livro.onde_comprar_nome and livro.onde_comprar_link %}
-<p><strong>Onde comprar:</strong>
-    <a href="{{ livro.onde_comprar_link }}" target="_blank" style="color: #007BFF; text-decoration: underline;">
-        {{ livro.onde_comprar_nome }}
-    </a>
-</p>
-{% else %}
-<p><strong>Onde comprar:</strong> Não informado</p>
-{% endif %}
+        <p><strong>Autor:</strong> {{ livro.autor|default:"-" }}</p>
+        <p><strong>Gênero:</strong> {{ livro.genero|default:"-" }}</p>
+        <p><strong>Nota:</strong> {{ livro.nota|default:"-" }}</p>
+        <p><strong>Descrição:</strong> {{ livro.descricao|default:"-" }}</p>
+        <p><strong>Local:</strong> {{ livro.local|default:"-" }}</p>
+        <p><strong>Status:</strong> {% if livro.lido %}Lido ✅{% else %}Não lido ❌{% endif %}</p>
+        <p><strong>Preço:</strong> R$ {{ livro.preco|default:"-" }}</p>
+        <p><strong>Onde comprar:</strong>
+            {% if livro.onde_comprar_nome and livro.onde_comprar_link %}
+                <a href="{{ livro.onde_comprar_link }}" target="_blank">{{ livro.onde_comprar_nome }}</a>
+            {% elif livro.onde_comprar_nome %}
+                {{ livro.onde_comprar_nome }}
+            {% else %}
+                -
+            {% endif %}
+        </p>
 
-
-        <a href="{% url 'editar_livro' livro.id %}" class="btn-editar">✏️ Editar livro</a>
-        <button class="voltar" onclick="window.history.back()">← Voltar</button>
+        <a href="{% url 'editar_livro' livro.id %}" class="btn-editar">Editar</a>
+        <a href="{% url 'home' %}"><button class="voltar">Voltar</button></a>
     </div>
 </div>
 {% endblock %}
-

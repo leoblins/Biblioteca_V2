@@ -35,7 +35,7 @@ class Livro(models.Model):
 
 
     onde_comprar_nome = models.CharField(max_length=100, blank=True, null=True)
-    onde_comprar_link = models.URLField(max_length=500, blank=True, null=True)
+    onde_comprar_link = models.URLField(blank=True, null=True)
     genero = models.CharField(max_length=50, blank=True, null=True)
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)  
     

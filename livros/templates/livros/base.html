@@ -3,7 +3,8 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}Biblioteca do Pai{% endblock %}</title>
+    <title>{% block title %}Minha Biblioteca{% endblock %}</title>
+
 
     <!-- CSS do Swiper.js -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
@@ -13,15 +14,23 @@
 </head>
 <body>
 
-    <div style="text-align: right; padding: 10px;">
-    {% if request.user.is_authenticated %}
-        <span>Bem-vindo, {{ request.user.username }}!</span>
-        <form action="{% url 'logout' %}" method="post" style="display: inline;">
-            {% csrf_token %}
-            <button type="submit" style="margin-left: 10px;">Sair</button>
-        </form>
-    {% endif %}
-</div>
+    <!-- HEADER FIXO -->
+    <header class="topo-header">
+        <div class="limite-header">
+            <div class="logo-nome">
+                📚 <strong>Minha Biblioteca</strong>
+            </div>
+            {% if request.user.is_authenticated %}
+            <div class="usuario">
+                <span>Bem-vindo, {{ request.user.username }}!</span>
+                <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn-sair">Sair</button>
+                </form>
+            </div>
+            {% endif %}
+        </div>
+    </header>
 
     <div class="container">
         {% block content %}
@@ -35,5 +44,12 @@
     {% block scripts %}
     <!-- Bloco para scripts específicos da página -->
     {% endblock %}
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <p>&copy;  Minha Biblioteca.</p>
+            <p>Desenvolvido por Leonardo Lins Barbosa</p>
+        </div>
+    </footer>
 </body>
 </html>
