@@ -68,7 +68,8 @@ def editar_livro(request, pk):
             form.save()
             return redirect('home')
 
-    return render(request, 'livros/formulario_livro.html', {'form': form, 'editar': True})
+    return render(request, 'livros/editar_livro.html', {'form': form})
+
 
 
 @login_required

@@ -4,7 +4,9 @@
 {% block content %}
 <div class="form-container">
     <h2>Adicionar Livro</h2>
-
+    <div style="text-align: center; margin-bottom: 20px;">
+        <a href="{% url 'home' %}" class="btn-voltar">← Voltar à Página Inicial</a>
+    </div>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
 

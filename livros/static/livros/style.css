@@ -1,9 +1,8 @@
-/* ---------- CORES BASE SUAVES ---------- */
-/*
+/* ---------- CORES BASE SUAVES ----------
 #F9F6F1 - fundo principal
 #F7DDD1 - rosa claro p/ detalhes
-#DDB7AC - rosa médio (usado só em alertas/destaques pequenos)
-#9D9885 - verde oliva (cor principal de botões/títulos)
+#DDB7AC - rosa médio (alertas/destaques)
+#9D9885 - verde oliva (botões/títulos)
 #7f796a - verde oliva escuro (hover)
 */
 
@@ -37,7 +36,7 @@ h1, h2 {
     color: #7f796a;
 }
 
-/* ---------- BOTÕES GERAIS (buscar, dropdown, etc) ---------- */
+/* ---------- BOTÕES GERAIS ---------- */
 button,
 .dropbtn {
     padding: 6px 12px;
@@ -60,20 +59,11 @@ button:hover,
     color: white;
 }
 
-/* ---------- BOTÃO DE LIMPAR FILTRO DIFERENCIADO ---------- */
+/* ---------- BOTÃO LIMPAR ---------- */
 .clear-btn {
-    padding: 6px 12px;
-    font-size: 14px;
-    font-weight: bold;
-    border-radius: 4px;
     border: 2px solid #D0A7A0;
     background-color: #F7DDD1;
     color: #7f796a;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    height: 38px;
-    min-width: 140px;
-    box-sizing: border-box;
 }
 
 .clear-btn:hover {
@@ -81,7 +71,7 @@ button:hover,
     color: white;
 }
 
-/* ---------- BOTÃO ADICIONAR LIVRO (central) ---------- */
+/* ---------- BOTÃO ADICIONAR LIVRO ---------- */
 .btn-add {
     background-color: #9D9885;
     color: white;
@@ -101,10 +91,10 @@ button:hover,
     transform: scale(1.03);
 }
 
-/* ---------- DROPDOWNS DE FILTRO ---------- */
+/* ---------- DROPDOWN ---------- */
 .dropdown {
     position: relative;
-    z-index: 100; /* Garante que o botão fique acima */
+    z-index: 100;
 }
 
 .dropdown-content {
@@ -115,36 +105,11 @@ button:hover,
     border: 1px solid #ccc;
     border-radius: 4px;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-    z-index: 9999; /* 🔥 Esse é o importante */
+    z-index: 100;
     max-height: 200px;
     overflow-y: auto;
 }
 
-.selo-lido, .selo-nao-lido {
-    position: absolute;
-    top: 6px;
-    left: 6px;
-    padding: 4px 8px;
-    border-radius: 6px;
-    font-size: 12px;
-    font-weight: bold;
-    color: white;
-    z-index: 10;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
-}
-
-.selo-lido {
-    background-color: #28a745; /* Verde */
-}
-
-.selo-nao-lido {
-    background-color: #dc3545; /* Vermelho */
-}
-
-/* Garante que os slides permitam elementos posicionados */
-.swiper-slide {
-    position: relative;
-}
 .dropdown-content a {
     color: #333;
     padding: 8px 10px;
@@ -162,7 +127,29 @@ button:hover,
     display: block;
 }
 
-/* ---------- CARROSSEL E LIVROS ---------- */
+/* ---------- SELO LIDO ---------- */
+.selo-lido, .selo-nao-lido {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: bold;
+    color: white;
+    z-index: 10;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+
+.selo-lido {
+    background-color: #28a745;
+}
+
+.selo-nao-lido {
+    background-color: #dc3545;
+}
+
+/* ---------- SWIPER SLIDE UNIFICADO ---------- */
 .swiper {
     padding-bottom: 30px;
 }
@@ -173,12 +160,21 @@ button:hover,
     background: white;
     padding: 10px;
     margin: 0;
-    border-radius: 8px;
+    border-radius: 12px;
     border: 1px solid #eee;
-    box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
     align-items: center;
+    transition: all 0.3s ease;
+    transform: translateZ(0);
+    cursor: pointer;
+}
+
+.swiper-slide:hover {
+    transform: scale(1.01);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    z-index: 10;
 }
 
 .swiper-slide img {
@@ -194,6 +190,7 @@ button:hover,
     transform: scale(1.1);
 }
 
+/* ---------- CARD DE LIVRO ---------- */
 .titulo-livro {
     margin-top: 8px;
     font-size: 14px;
@@ -201,7 +198,6 @@ button:hover,
     color: #333;
 }
 
-/* Botões internos dos cards */
 .botoes {
     margin-top: 8px;
     display: flex;
@@ -260,6 +256,7 @@ button:hover,
     color: #9D9885;
 }
 
+/* ---------- VOLTAR/EDITAR BOTÕES ---------- */
 .voltar {
     margin-top: 20px;
     padding: 8px 16px;
@@ -291,7 +288,7 @@ button:hover,
     background-color: #e0a800;
 }
 
-/* ---------- MENSAGEM SEM LIVROS ---------- */
+/* ---------- SEM LIVROS ---------- */
 .sem-livros {
     height: 100px;
     background-color: #F9F6F1;
@@ -307,13 +304,14 @@ button:hover,
     text-align: center;
 }
 
+/* ---------- HEADER ---------- */
 .topo-header {
     background-color: #F7DDD1;
     padding: 10px 20px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     position: sticky;
     top: 0;
-    z-index: 10;
+    z-index: 1000;
 }
 
 .limite-header {
@@ -352,11 +350,24 @@ button:hover,
     background-color: #7f796a;
 }
 
-.arraste-dica {
-    font-size: 13px;
+/* ---------- FORMULÁRIOS ---------- */
+form label {
+    font-weight: bold;
     color: #7f796a;
-    margin: -10px 0 10px 8px;
-    font-style: italic;
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+form input:not([type="submit"]),
+form textarea,
+form select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 14px;
 }
 
 .form-container {
@@ -375,31 +386,6 @@ button:hover,
     margin-bottom: 25px;
 }
 
-form label {
-    font-weight: bold;
-    color: #7f796a;
-    display: block;
-    margin-top: 15px;
-    margin-bottom: 5px;
-}
-
-form input[type="text"],
-form input[type="number"],
-form input[type="url"],
-form input[type="file"],
-form textarea,
-form select {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    box-sizing: border-box;
-    font-size: 14px;
-}
-
-.form-checkbox {
-    margin-top: 15px;
-}
 
 .botoes-formulario {
     display: flex;
@@ -439,8 +425,10 @@ form select {
     background-color: #aaa;
 }
 
-.login-container {
-    max-width: 400px;
+/* ---------- LOGIN / REGISTRO ---------- */
+.login-container,
+.registro-container {
+    max-width: 450px;
     margin: 60px auto;
     background-color: white;
     padding: 30px;
@@ -450,12 +438,14 @@ form select {
     text-align: center;
 }
 
-.login-container h2 {
+.login-container h2,
+.registro-container h2 {
     margin-bottom: 25px;
     color: #9D9885;
 }
 
-.login-container label {
+.login-container label,
+.registro-container label {
     display: block;
     text-align: left;
     font-weight: bold;
@@ -463,7 +453,8 @@ form select {
     margin: 10px 0 5px;
 }
 
-.login-container input {
+.login-container input,
+.registro-container input {
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
@@ -507,131 +498,7 @@ form select {
     margin-bottom: 10px;
 }
 
-.registro-container {
-    max-width: 450px;
-    margin: 60px auto;
-    background-color: white;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.05);
-    border: 1px solid #eee;
-    text-align: center;
-}
-
-.registro-container h2 {
-    margin-bottom: 25px;
-    color: #9D9885;
-}
-
-.registro-container label {
-    display: block;
-    text-align: left;
-    font-weight: bold;
-    color: #7f796a;
-    margin: 10px 0 5px;
-}
-
-.registro-container input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    margin-bottom: 15px;
-    font-size: 14px;
-    box-sizing: border-box;
-}
-
-@media (max-width: 768px) {
-
-    /* Container principal */
-    body {
-        padding: 10px;
-    }
-
-    .container {
-        padding: 0 10px;
-    }
-
-    /* Centraliza e reduz títulos */
-    h1, h2 {
-        text-align: center;
-        font-size: 22px;
-    }
-
-    .cabecalho-centralizado h1 {
-        font-size: 1.8em;
-    }
-
-    /* Carrossel */
-    .swiper-slide {
-        width: 130px !important;
-    }
-
-    /* Filtros e formulários */
-    form {
-        flex-direction: column !important;
-        align-items: stretch;
-    }
-
-    form input,
-    form select,
-    form textarea,
-    form button,
-    .dropbtn,
-    .clear-btn {
-        width: 100% !important;
-        margin-bottom: 10px;
-    }
-
-    .dropdown-content {
-        position: static;
-        width: 100%;
-        box-shadow: none;
-    }
-
-    /* Botões de editar/excluir nos cards */
-    .botoes {
-        flex-direction: column;
-        gap: 5px;
-    }
-
-    .botoes button {
-        width: 100%;
-    }
-
-    /* Formulários (login, adicionar, cadastro) */
-    .form-container,
-    .login-container,
-    .registro-container {
-        margin: 30px 15px;
-        padding: 20px;
-    }
-
-    .btn-login, .btn-salvar, .btn-cadastrar {
-        width: 100%;
-    }
-
-    .botoes-login {
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    .voltar-login {
-        margin-top: 15px;
-    }
-
-    /* Selo de Lido */
-    .selo-lido, .selo-nao-lido {
-        font-size: 11px;
-        padding: 3px 6px;
-    }
-
-    .arraste-dica {
-        text-align: center;
-        margin-bottom: 10px;
-    }
-}
-
+/* ---------- FOOTER ---------- */
 .site-footer {
     background-color: #F7DDD1;
     padding: 20px 10px;
@@ -644,4 +511,66 @@ form select {
 
 .footer-content p {
     margin: 5px 0;
+}
+
+/* ---------- FILTROS ---------- */
+.barra-filtros {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin: 20px 0;
+}
+
+.barra-filtros input[type="text"] {
+    padding: 6px;
+    width: 250px;
+    height: 38px;
+    box-sizing: border-box;
+}
+
+.barra-filtros button,
+.barra-filtros .dropbtn {
+    height: 38px;
+    min-width: 120px;
+}
+
+.arraste-dica {
+    font-size: 13px;
+    color: #7f796a;
+    font-style: italic;
+    white-space: nowrap;
+    margin-left: 10px;
+}
+
+.titulo-local {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.arraste-dica {
+    font-size: 13px;
+    color: #7f796a;
+    font-style: italic;
+    white-space: nowrap;
+}
+
+.btn-voltar {
+    display: inline-block;
+    background-color: #ccc;
+    color: #333;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+
+.btn-voltar:hover {
+    background-color: #aaa;
+    color: white;
 }

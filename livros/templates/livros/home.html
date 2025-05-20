@@ -1,13 +1,12 @@
 {% extends 'livros/base.html' %}
 {% load static %}
 
-
-
 {% block content %}
 
-<form method="get" action="{% url 'home' %}" style="margin-bottom: 20px; display: flex; flex-wrap: wrap; gap: 8px;">
+<form method="get" action="{% url 'home' %}" class="barra-filtros">
 
-    <input type="text" name="q" placeholder="Buscar por nome ou autor..." value="{{ request.GET.q }}" style="padding: 6px; width: 250px;">
+    <input type="text" name="q" placeholder="Buscar por nome ou autor..." value="{{ request.GET.q }}">
+
     <button type="submit">Buscar</button>
 
     <!-- Filtro por autor -->
@@ -54,30 +53,29 @@
 
 <div class="cabecalho-centralizado">
     <h1>Biblioteca</h1>
-    <!-- <h3>jsBarbosa</h3> -->
     <button type="button" class="btn-add" onclick="location.href='{% url 'adicionar_livro' %}'">
         + Adicionar Livro
     </button>
 </div>
 
 {% for local, livros_local in locais.items %}
-    <h2>{{ local }} ({{ livros_local|length }} livro{{ livros_local|length|pluralize }})</h2>
-    <p class="arraste-dica">Arraste para o lado ⟶</p>
 
+<div class="titulo-local">
+    <h2>{{ local }} ({{ livros_local|length }} livro{{ livros_local|length|pluralize }})</h2>
+    <span class="arraste-dica" style="display: none;">⟶ Arraste para o lado</span>
+</div>
 
     <div class="swiper swiper-{{ forloop.counter }}">
         <div class="swiper-wrapper">
             {% for livro in livros_local %}
             <div class="swiper-slide">
 
-                <!-- Badge Lido/Não lido -->
                 {% if livro.lido %}
                     <div class="selo-lido">Lido</div>
                 {% else %}
                     <div class="selo-nao-lido">Não lido</div>
                 {% endif %}
 
-                <!-- Capa clicável -->
                 <a href="{% url 'detalhes_livro' livro.id %}">
                     {% if livro.capa %}
                         <img src="{{ livro.capa.url }}" alt="{{ livro.nome }}" class="capa-zoom">
@@ -86,14 +84,12 @@
                     {% endif %}
                 </a>
 
-                <!-- Título e autor -->
                 <div class="titulo-livro">
                     <strong>{{ livro.nome }}</strong><br>
                     <span>Autor: {{ livro.autor }}</span><br>
                     <span>Nota: {{ livro.nota|default:"-" }}</span>
                 </div>
 
-                <!-- Botões -->
                 <div class="botoes">
                     <button class="editar" onclick="location.href='{% url 'editar_livro' livro.id %}'">Editar</button>
                     <button class="excluir" onclick="location.href='{% url 'excluir_livro' livro.id %}'">Excluir</button>
@@ -109,8 +105,8 @@
 
 {% block scripts %}
 <script>
-    document.querySelectorAll('.swiper').forEach((el) => {
-        new Swiper(el, {
+    document.querySelectorAll('.swiper').forEach((swiperEl) => {
+        new Swiper(swiperEl, {
             slidesPerView: 'auto',
             spaceBetween: 10,
             loop: false,
@@ -118,6 +114,13 @@
             resistanceRatio: 0,
             watchOverflow: true,
         });
+
+        const wrapper = swiperEl.querySelector('.swiper-wrapper');
+        const dica = swiperEl.previousElementSibling.querySelector('.arraste-dica');
+
+        if (wrapper.scrollWidth > wrapper.clientWidth && dica) {
+            dica.style.display = 'inline';
+        }
     });
 </script>
 {% endblock %}
