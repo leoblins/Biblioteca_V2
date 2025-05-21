@@ -1,13 +1,13 @@
 from pathlib import Path
+import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'sua-secret-key-aqui'
 
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['minha-biblioteca-k0hb.onrender.com', 'localhost', '127.0.0.1']
-
 
 # Aplicações instaladas
 INSTALLED_APPS = [
@@ -18,12 +18,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'livros',  # seu app
+    'livros',
 ]
 
-# Middleware necessário para o admin
+# Middleware
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # serve arquivos estáticos em produção
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -34,7 +35,6 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'biblioteca_pai.urls'
 
-# Configuração de templates (necessária para admin e suas views)
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -53,7 +53,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'biblioteca_pai.wsgi.application'
 
-# Banco de dados (SQLite por padrão)
+# Banco de dados
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -61,7 +61,7 @@ DATABASES = {
     }
 }
 
-# Validações de senha padrão do Django
+# Validações de senha
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -77,23 +77,23 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# Configurações de idioma e timezone
+# Idioma e timezone
 LANGUAGE_CODE = 'pt-br'
 TIME_ZONE = 'America/Sao_Paulo'
 USE_I18N = True
 USE_TZ = True
 
-# Arquivos estáticos (CSS, JS, etc.)
+# Arquivos estáticos (CSS, JS)
 STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# Arquivos de mídia (ex: capas de livros)
+# Arquivos de mídia (imagens enviadas pelo usuário)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Redirecionamentos de login/logout
 LOGIN_REDIRECT_URL = 'home'
-
 LOGOUT_REDIRECT_URL = 'login'
-
 LOGIN_URL = '/login/'
