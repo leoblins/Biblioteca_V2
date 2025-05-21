@@ -57,9 +57,13 @@
             {{ form.nota }}
         </div>
 
-        <div class="form-checkbox">
-            <label for="{{ form.lido.id_for_label }}">Já leu?</label>
-            {{ form.lido }}
+        <div style="margin: 10px 0;">
+            <label for="{{ form.lido.id_for_label }}" style="display: inline-block; margin-right: 8px;">
+                Já leu?
+            </label>
+            <span style="display: inline-block;">
+                {{ form.lido }}
+            </span>
         </div>
 
         <div>

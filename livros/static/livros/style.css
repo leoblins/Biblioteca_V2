@@ -73,7 +73,7 @@ button:hover,
 
 /* ---------- BOTÃO ADICIONAR LIVRO ---------- */
 .btn-add {
-    background-color: #999b85; /* #bed39d; */
+    background-color: #999b85;    /* #bed39d; */
     color: white;
     border: none;
     padding: 10px 20px;
@@ -216,11 +216,11 @@ button:hover,
 }
 
 .botoes .editar {
-    background-color: #999b85/* #bed39d; */
+    background-color: /*#859b8c */  #63ca55; 
 }
 
 .botoes .excluir {
-    background-color: #D0A7A0;
+    background-color: /*#D0A7A0;*/  #721c24 
 }
 
 .botoes button:hover {
@@ -337,7 +337,7 @@ button:hover,
 }
 
 .btn-sair {
-    background-color: #999b85;
+    background-color: #999b85; /* #bed39d; */
     color: white;
     border: none;
     padding: 6px 12px;
@@ -395,7 +395,7 @@ form select {
 }
 
 .btn-salvar {
-    background-color: #999b85;
+    background-color: #999b85; /* #bed39d; */
     color: white;
     border: none;
     padding: 10px 20px;
@@ -473,7 +473,7 @@ form select {
 
 .btn-login,
 .btn-cadastrar {
-    background-color: #999b85;
+    background-color: #999b85; /* #bed39d; */
     color: white;
     border: none;
     padding: 10px 20px;
@@ -605,3 +605,19 @@ form select {
     90%  { opacity: 1; }
     100% { opacity: 0; display: none; }
 }
+
+.btn-remover-imagem {
+    margin-top: 8px;
+    padding: 6px 12px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-remover-imagem:hover {
+    background-color: #c82333;
+}
+
