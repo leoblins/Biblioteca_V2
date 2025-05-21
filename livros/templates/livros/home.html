@@ -51,12 +51,16 @@
     {% endif %}
 </form>
 
-<div class="cabecalho-centralizado">
+<div class="cabecalho-centralizado" style="margin-bottom: 10px;">
     <h1>Biblioteca</h1>
+    <h3 style="color:#7f796a; font-weight: normal;">
+        Visualize e gerencie seus livros organizados por categoria
+    </h3>
     <button type="button" class="btn-add" onclick="location.href='{% url 'adicionar_livro' %}'">
         + Adicionar Livro
     </button>
 </div>
+
 
 {% for local, livros_local in locais.items %}
 

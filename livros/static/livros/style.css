@@ -31,10 +31,11 @@ h1, h2 {
 }
 
 .cabecalho-centralizado h3 {
-    font-weight: normal;
-    margin-bottom: 15px;
-    color: #7f796a;
+    font-size: 16px;
+    font-style: italic;
+    opacity: 0.9;
 }
+
 
 /* ---------- BOTÕES GERAIS ---------- */
 button,
