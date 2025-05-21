@@ -6,7 +6,8 @@ SECRET_KEY = 'sua-secret-key-aqui'
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['minha-biblioteca-k0hb.onrender.com', 'localhost', '127.0.0.1']
+
 
 # Aplicações instaladas
 INSTALLED_APPS = [
