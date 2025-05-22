@@ -6,7 +6,9 @@
 {% block content %}
 <div class="detalhes-container">
     <div>
-        {% if livro.capa %}
+        {% if livro.url_capa %}
+            <img src="{{ livro.url_capa }}" alt="{{ livro.nome }}" class="capa-zoom">
+        {% elif livro.capa %}
             <img src="{{ livro.capa.url }}" alt="{{ livro.nome }}" class="capa-zoom">
         {% else %}
             <img src="{% static 'livros/imagem_padrao.png' %}" alt="Capa não disponível" class="capa-zoom">
