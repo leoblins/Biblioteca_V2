@@ -16,3 +16,4 @@ END
 
 echo "Iniciando Gunicorn..."
 exec gunicorn biblioteca_pai.wsgi:application
+    
