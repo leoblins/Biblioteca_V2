@@ -3,6 +3,7 @@ import os
 import dj_database_url
 from decouple import config
 
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'sua-secret-key-aqui'
@@ -56,13 +57,16 @@ TEMPLATES = [
 WSGI_APPLICATION = 'biblioteca_pai.wsgi.application'
 
 # Banco de dados - PostgreSQL da Render
+DATABASE_URL = config('DATABASE_URL', default='sqlite:///db.sqlite3')
+
 DATABASES = {
-    'default': dj_database_url.config(
-        default=config('DATABASE_URL'),
+    'default': dj_database_url.parse(
+        DATABASE_URL,
         conn_max_age=600,
-        ssl_require=True
+        ssl_require=DATABASE_URL.startswith('postgres')
     )
 }
+
 
 # Validações de senha
 AUTH_PASSWORD_VALIDATORS = [
