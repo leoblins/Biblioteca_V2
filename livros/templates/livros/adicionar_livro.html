@@ -1,90 +1,25 @@
 {% extends 'livros/base.html' %}
+{% load static %}
+
 {% block title %}Adicionar Livro{% endblock %}
 
 {% block content %}
 <div class="form-container">
     <h2>Adicionar Livro</h2>
-
-    <div style="text-align: center; margin-bottom: 20px;">
-        <a href="{% url 'home' %}" class="btn-voltar">← Voltar à Página Inicial</a>
-    </div>
-
-    <form method="post" enctype="multipart/form-data">
+    <form method="POST">
         {% csrf_token %}
+        {{ form.non_field_errors }}
+        
+        {% for field in form %}
+            <div class="form-group">
+                {{ field.label_tag }}
+                {{ field }}
+                {{ field.errors }}
+            </div>
+        {% endfor %}
 
-        <div>
-            <label for="{{ form.nome.id_for_label }}">Nome:</label>
-            {{ form.nome }}
-        </div>
-
-        <div>
-            <label for="{{ form.autor.id_for_label }}">Autor:</label>
-            {{ form.autor }}
-        </div>
-
-        <div>
-            <label for="{{ form.genero.id_for_label }}">Gênero:</label>
-            {{ form.genero }}
-        </div>
-
-        <div>
-            <label for="{{ form.descricao.id_for_label }}">Descrição:</label>
-            {{ form.descricao }}
-        </div>
-
-        <div>
-            <label for="{{ form.local.id_for_label }}">Local:</label>
-            {{ form.local }}
-        </div>
-
-        <!-- Upload manual da capa -->
-        <div>
-            <label for="{{ form.capa.id_for_label }}">Enviar imagem da capa:</label>
-            {{ form.capa }}
-        </div>
-
-        <!-- OU: colar URL da imagem -->
-        <p style="text-align: center; margin: 10px 0;">ou</p>
-
-        <div>
-            <label for="{{ form.url_capa.id_for_label }}">Colar URL da imagem da capa:</label>
-            {{ form.url_capa }}
-            <small style="color: #777;">(Clique com o botão direito em uma imagem e selecione “Copiar endereço da imagem”)</small>
-        </div>
-
-        <div>
-            <label for="{{ form.nota.id_for_label }}">Nota (0 a 10):</label>
-            {{ form.nota }}
-        </div>
-
-        <div style="margin: 10px 0;">
-            <label for="{{ form.lido.id_for_label }}" style="display: inline-block; margin-right: 8px;">
-                Já leu?
-            </label>
-            <span style="display: inline-block;">
-                {{ form.lido }}
-            </span>
-        </div>
-
-        <div>
-            <label for="{{ form.preco.id_for_label }}">Preço:</label>
-            {{ form.preco }}
-        </div>
-
-        <div>
-            <label for="{{ form.onde_comprar_nome.id_for_label }}">Loja (ex: Amazon):</label>
-            {{ form.onde_comprar_nome }}
-        </div>
-
-        <div>
-            <label for="{{ form.onde_comprar_link.id_for_label }}">Link da loja:</label>
-            {{ form.onde_comprar_link }}
-        </div>
-
-        <div class="botoes-formulario">
-            <button type="submit" class="btn-salvar">Salvar</button>
-            <a href="{% url 'home' %}" class="btn-cancelar">Cancelar</a>
-        </div>
+        <button type="submit" class="btn-salvar">Salvar</button>
+        <a href="{% url 'home' %}" class="btn-cancelar">Cancelar</a>
     </form>
 </div>
 {% endblock %}

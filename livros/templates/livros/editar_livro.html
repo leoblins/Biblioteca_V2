@@ -9,7 +9,7 @@
         <a href="{% url 'home' %}" class="btn-voltar">← Voltar à Página Inicial</a>
     </div>
 
-    <form method="post" enctype="multipart/form-data">
+    <form method="post">
         {% csrf_token %}
 
         <div>
@@ -28,7 +28,7 @@
         </div>
 
         <div>
-            <label for="{{ form.descricao.id_for_label }}">Descrição:</label>
+            <label for="{{ form.descricao.id_for_label }}">Minha crítica:</label>
             {{ form.descricao }}
         </div>
 
@@ -37,35 +37,18 @@
             {{ form.local }}
         </div>
 
-        <!-- CAMPO DE CAPA -->
-        <div>
-            <label for="id_capa">Enviar imagem da capa:</label><br>
-
-            {% if form.instance.capa %}
-                <div id="link-atual">
-                    Atualmente: <a href="{{ form.instance.capa.url }}" target="_blank">{{ form.instance.capa.name }}</a><br>
-                </div>
-            {% endif %}
-
-            <input type="file" name="capa" id="id_capa">
-        </div>
-
-        <p style="text-align:center; margin: 10px 0;">ou</p>
-
-        <!-- CAMPO DE URL -->
+        <!-- CAMPO DE URL DA CAPA -->
         <div>
             <label for="{{ form.url_capa.id_for_label }}">Colar URL da imagem da capa:</label>
             <small>(Clique com o botão direito em uma imagem e selecione “Copiar endereço da imagem”)</small>
-            <input type="url" name="url_capa" id="id_url_capa" value="{{ form.initial.url_capa }}">
+            {{ form.url_capa }}
         </div>
 
-        <!-- CHECKBOX E BOTÃO -->
+        <!-- BOTÃO DE REMOVER -->
         <input type="checkbox" name="capa-clear" id="id_capa-clear" style="display: none;">
 
         <div style="margin-top: 10px;">
-            <button type="button" class="btn-remover-imagem" onclick="limparImagem()">
-                Remover imagem
-            </button>
+            <button type="button" class="btn-remover-imagem" onclick="limparImagem()">Remover imagem</button>
         </div>
 
         <!-- OUTROS CAMPOS -->
@@ -75,17 +58,9 @@
         </div>
 
         <div style="margin: 10px 0;">
-    <label for="{{ form.lido.id_for_label }}" style="display: inline-block; margin-right: 8px;">
-        Já leu?
-    </label>
-    <span style="display: inline-block;">
-        {{ form.lido }}
-    </span>
-</div>
-
-        
-        
-        
+            <label for="{{ form.lido.id_for_label }}" style="display: inline-block; margin-right: 8px;">Já leu?</label>
+            <span style="display: inline-block;">{{ form.lido }}</span>
+        </div>
 
         <div>
             <label for="{{ form.preco.id_for_label }}">Preço:</label>
@@ -111,33 +86,18 @@
 
 <script>
     function limparImagem() {
-        const inputFile = document.getElementById("id_capa");
         const checkboxLimpar = document.getElementById("id_capa-clear");
-        const atualmente = document.getElementById("link-atual");
         const inputURL = document.getElementById("id_url_capa");
-    
-        // Limpar input file
-        if (inputFile) {
-            inputFile.value = "";
-        }
-    
-        // Marcar checkbox hidden
+
         if (checkboxLimpar) {
             checkboxLimpar.checked = true;
         }
-    
-        // Esconder link atual
-        if (atualmente) {
-            atualmente.style.display = "none";
-        }
-    
-        // Limpar campo de URL
+
         if (inputURL) {
             inputURL.value = "";
         }
-    
+
         alert("A imagem foi marcada para remoção. Clique em salvar para confirmar.");
     }
-    </script>
-    
+</script>
 {% endblock %}
