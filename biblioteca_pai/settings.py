@@ -6,11 +6,15 @@ from decouple import config
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'sua-secret-key-aqui'
+SECRET_KEY = config('SECRET_KEY', default='unsafe-secret-key')
 
-DEBUG = True
+DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = ['minha-biblioteca-k0hb.onrender.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = [
+    'minha-biblioteca-k0hb.onrender.com',
+    'localhost',
+    '127.0.0.1'
+]
 
 # Aplicações instaladas
 INSTALLED_APPS = [
@@ -27,7 +31,7 @@ INSTALLED_APPS = [
 # Middleware
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # serve arquivos estáticos em produção
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -56,7 +60,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'biblioteca_pai.wsgi.application'
 
-# Banco de dados - PostgreSQL da Render
+# Banco de dados - PostgreSQL da Render (ou SQLite local)
 DATABASE_URL = config('DATABASE_URL', default='sqlite:///db.sqlite3')
 
 DATABASES = {
@@ -66,7 +70,6 @@ DATABASES = {
         ssl_require=DATABASE_URL.startswith('postgres')
     )
 }
-
 
 # Validações de senha
 AUTH_PASSWORD_VALIDATORS = [
@@ -93,8 +96,9 @@ USE_TZ = True
 # Arquivos estáticos (CSS, JS)
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# Arquivos de mídia (imagens enviadas pelo usuário)
+# Arquivos de mídia
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
