@@ -4,4 +4,6 @@ __pycache__/
 db.sqlite3
 .env
 *.log
-staticfiles/
+
+# Config local (não subir pro Git/Render)
+biblioteca_pai/settings_local.py

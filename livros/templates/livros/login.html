@@ -17,6 +17,9 @@
         <label for="id_password">Senha:</label>
         {{ form.password }}
 
+        <a href="{% url 'password_reset' %}" ...>Esqueceu sua senha?</a>
+
+
         <div class="botoes-login">
             <button type="submit" class="btn-login">Entrar</button>
             <a href="{% url 'registro' %}" class="btn-cadastrar">Cadastrar</a>

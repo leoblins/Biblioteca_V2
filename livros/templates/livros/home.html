@@ -69,42 +69,43 @@
     <span class="arraste-dica" style="display: none;">⟶ Arraste para o lado</span>
 </div>
 
-    <div class="swiper swiper-{{ forloop.counter }}">
-        <div class="swiper-wrapper">
-            {% for livro in livros_local %}
-            <div class="swiper-slide">
+<div class="swiper swiper-{{ forloop.counter }}">
+    <div class="swiper-wrapper">
+        {% for livro in livros_local %}
+        <div class="swiper-slide">
 
-                {% if livro.lido %}
-                    <div class="selo-lido">Lido</div>
+            {% if livro.lido %}
+                <div class="selo-lido">Lido</div>
+            {% else %}
+                <div class="selo-nao-lido">Não lido</div>
+            {% endif %}
+
+            <a href="{% url 'detalhes_livro' livro.id %}">
+                {% if livro.url_capa %}
+                    <img src="{{ livro.url_capa }}" alt="{{ livro.nome }}" class="capa-zoom">
+                {% elif livro.capa %}
+                    <img src="{{ livro.capa.url }}" alt="{{ livro.nome }}" class="capa-zoom">
                 {% else %}
-                    <div class="selo-nao-lido">Não lido</div>
+                    <img src="{% static 'livros/imagem_padrao.png' %}" alt="Capa não disponível" class="capa-zoom">
                 {% endif %}
+            </a>
 
-                <a href="{% url 'detalhes_livro' livro.id %}">
-                    {% if livro.url_capa %}
-    <img src="{{ livro.url_capa }}" alt="{{ livro.nome }}" class="capa-zoom">
-{% elif livro.capa %}
-    <img src="{{ livro.capa.url }}" alt="{{ livro.nome }}" class="capa-zoom">
-{% else %}
-    <img src="{% static 'livros/imagem_padrao.png' %}" alt="Capa não disponível" class="capa-zoom">
-{% endif %}
-                </a>
-
-                <div class="titulo-livro">
-                    <strong>{{ livro.nome }}</strong><br>
-                    <span>Autor: {{ livro.autor }}</span><br>
-                    <span>Nota: {{ livro.nota|default:"-" }}</span>
-                </div>
-
-                <div class="botoes">
-                    <button class="editar" onclick="location.href='{% url 'editar_livro' livro.id %}'">Editar</button>
-                    <button class="excluir" onclick="location.href='{% url 'excluir_livro' livro.id %}'">Excluir</button>
-                </div>
-
+            <div class="conteudo-card">
+                <div class="titulo-livro"><strong>{{ livro.nome }}</strong></div>
+                <div class="autor-livro">Autor: {{ livro.autor }}</div>
+                <div class="nota-livro">Nota: {{ livro.nota|default:"-" }}</div>
             </div>
-            {% endfor %}
+
+            <div class="botoes">
+                <button class="editar" onclick="location.href='{% url 'editar_livro' livro.id %}'">Editar</button>
+                <button class="excluir" onclick="location.href='{% url 'excluir_livro' livro.id %}'">Excluir</button>
+            </div>
+
         </div>
+        {% endfor %}
     </div>
+</div>
+
 {% endfor %}
 
 {% endblock %}
