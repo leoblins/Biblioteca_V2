@@ -13,17 +13,23 @@
         {% csrf_token %}
 
         <div>
-            <label for="{{ form.nome.id_for_label }}">Nome:</label>
+            <label for="{{ form.nome.id_for_label }}">
+                Nome:{% if form.nome.field.required %} <span style="color: red;">*</span>{% endif %}
+            </label>
             {{ form.nome }}
         </div>
 
         <div>
-            <label for="{{ form.autor.id_for_label }}">Autor:</label>
+            <label for="{{ form.autor.id_for_label }}">
+                Autor:{% if form.autor.field.required %} <span style="color: red;">*</span>{% endif %}
+            </label>
             {{ form.autor }}
         </div>
 
         <div>
-            <label for="{{ form.genero.id_for_label }}">Gênero:</label>
+            <label for="{{ form.genero.id_for_label }}">
+                Gênero:{% if form.genero.field.required %} <span style="color: red;">*</span>{% endif %}
+            </label>
             {{ form.genero }}
         </div>
 
@@ -33,27 +39,27 @@
         </div>
 
         <div>
-            <label for="{{ form.local.id_for_label }}">Local:</label>
+            <label for="{{ form.local.id_for_label }}">
+                Local:{% if form.local.field.required %} <span style="color: red;">*</span>{% endif %}
+            </label>
             {{ form.local }}
         </div>
 
-        <!-- CAMPO DE URL DA CAPA -->
         <div>
             <label for="{{ form.url_capa.id_for_label }}">Colar URL da imagem da capa:</label>
             <small>(Clique com o botão direito em uma imagem e selecione “Copiar endereço da imagem”)</small>
             {{ form.url_capa }}
         </div>
 
-        <!-- BOTÃO DE REMOVER -->
         <input type="checkbox" name="capa-clear" id="id_capa-clear" style="display: none;">
-
         <div style="margin-top: 10px;">
             <button type="button" class="btn-remover-imagem" onclick="limparImagem()">Remover imagem</button>
         </div>
 
-        <!-- OUTROS CAMPOS -->
         <div>
-            <label for="{{ form.nota.id_for_label }}">Nota (0 a 10):</label>
+            <label for="{{ form.nota.id_for_label }}">
+                Nota (0 a 10):{% if form.nota.field.required %} <span style="color: red;">*</span>{% endif %}
+            </label>
             {{ form.nota }}
         </div>
 
@@ -89,13 +95,8 @@
         const checkboxLimpar = document.getElementById("id_capa-clear");
         const inputURL = document.getElementById("id_url_capa");
 
-        if (checkboxLimpar) {
-            checkboxLimpar.checked = true;
-        }
-
-        if (inputURL) {
-            inputURL.value = "";
-        }
+        if (checkboxLimpar) checkboxLimpar.checked = true;
+        if (inputURL) inputURL.value = "";
 
         alert("A imagem foi marcada para remoção. Clique em salvar para confirmar.");
     }
