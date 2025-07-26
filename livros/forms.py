@@ -8,16 +8,14 @@ class LivroForm(forms.ModelForm):
         widget=forms.URLInput(attrs={'placeholder': 'https://exemplo.com/capa.jpg'})
     )
 
-    descricao = forms.CharField(
-        label='Minha crítica',
-        required=False,
-        widget=forms.Textarea(attrs={'rows': 4, 'placeholder': 'Escreva sua opinião sobre o livro...'})
-    )
-
     class Meta:
         model = Livro
         fields = [
-            'nome', 'autor', 'genero', 'descricao', 'local',
-            'nota', 'lido', 'url_capa', 'preco',
-            'onde_comprar_nome', 'onde_comprar_link'
+            'nome',
+            'autor',
+            'genero',
+            'local',
+            'lido',
+            'url_capa',
+            'capa',
         ]

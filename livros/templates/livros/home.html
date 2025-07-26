@@ -2,11 +2,8 @@
 {% load static %}
 
 {% block content %}
-
 <form method="get" action="{% url 'home' %}" class="barra-filtros">
-
     <input type="text" name="q" placeholder="Buscar por nome ou autor..." value="{{ request.GET.q }}">
-
     <button type="submit">Buscar</button>
 
     <!-- Filtro por autor -->
@@ -25,25 +22,23 @@
         <div class="dropdown-content">
             {% for genero in generos %}
                 {% if genero %}
-                <a href="?genero={{ genero }}{% if request.GET.autor %}&autor={{ request.GET.autor }}{% endif %}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{{ genero }}</a>
+                    <a href="?genero={{ genero }}{% if request.GET.autor %}&autor={{ request.GET.autor }}{% endif %}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{{ genero }}</a>
                 {% endif %}
             {% endfor %}
         </div>
     </div>
 
-    <!-- Botões para limpar filtros individualmente -->
+    <!-- Limpar filtros -->
     {% if autor_filtro %}
         <a href="?{% if request.GET.genero %}genero={{ request.GET.genero }}&{% endif %}{% if request.GET.q %}q={{ request.GET.q }}{% endif %}">
             <button type="button" class="clear-btn">✖ Limpar filtro de autor</button>
         </a>
     {% endif %}
-
     {% if genero_filtro %}
         <a href="?{% if request.GET.autor %}autor={{ request.GET.autor }}&{% endif %}{% if request.GET.q %}q={{ request.GET.q }}{% endif %}">
             <button type="button" class="clear-btn">✖ Limpar filtro de gênero</button>
         </a>
     {% endif %}
-
     {% if request.GET.q %}
         <a href="?{% if request.GET.autor %}autor={{ request.GET.autor }}&{% endif %}{% if request.GET.genero %}genero={{ request.GET.genero }}{% endif %}">
             <button type="button" class="clear-btn">✖ Limpar</button>
@@ -61,72 +56,77 @@
     </button>
 </div>
 
-
 {% for local, livros_local in locais.items %}
-
 <div class="titulo-local">
     <h2>{{ local }} ({{ livros_local|length }} livro{{ livros_local|length|pluralize }})</h2>
     <span class="arraste-dica" style="display: none;">⟶ Arraste para o lado</span>
 </div>
 
-<div class="swiper swiper-{{ forloop.counter }}">
-    <div class="swiper-wrapper">
-        {% for livro in livros_local %}
-        <div class="swiper-slide">
+<div class="swiper-container-wrapper">
+    <div class="swiper-btn-prev" style="display: none;">❮</div>
 
-            {% if livro.lido %}
-                <div class="selo-lido">Lido</div>
-            {% else %}
-                <div class="selo-nao-lido">Não lido</div>
-            {% endif %}
-
-            <a href="{% url 'detalhes_livro' livro.id %}">
-                {% if livro.url_capa %}
-                    <img src="{{ livro.url_capa }}" alt="{{ livro.nome }}" class="capa-zoom">
-                {% elif livro.capa %}
-                    <img src="{{ livro.capa.url }}" alt="{{ livro.nome }}" class="capa-zoom">
+    <div class="swiper swiper-{{ forloop.counter }}">
+        <div class="swiper-wrapper">
+            {% for livro in livros_local %}
+            <div class="swiper-slide">
+                {% if livro.lido %}
+                    <div class="selo-lido">Lido</div>
                 {% else %}
-                    <img src="{% static 'livros/imagem_padrao.png' %}" alt="Capa não disponível" class="capa-zoom">
+                    <div class="selo-nao-lido">Não lido</div>
                 {% endif %}
-            </a>
 
-            <div class="conteudo-card">
-                <div class="titulo-livro"><strong>{{ livro.nome }}</strong></div>
-                <div class="autor-livro">Autor: {{ livro.autor }}</div>
-                <div class="nota-livro">Nota: {{ livro.nota|default:"-" }}</div>
+                <a href="{% url 'detalhes_livro' livro.id %}">
+                    {% if livro.url_capa %}
+                        <img src="{{ livro.url_capa }}" alt="{{ livro.nome }}" class="capa-zoom">
+                    {% elif livro.capa %}
+                        <img src="{{ livro.capa.url }}" alt="{{ livro.nome }}" class="capa-zoom">
+                    {% else %}
+                        <img src="{% static 'livros/imagem_padrao.png' %}" alt="Capa não disponível" class="capa-zoom">
+                    {% endif %}
+                </a>
+
+                <div class="conteudo-card">
+                    <div class="titulo-livro"><strong>{{ livro.nome }}</strong></div>
+                    <div class="autor-livro">Autor: {{ livro.autor }}</div>
+                </div>
+
+                <div class="botoes">
+                    <button class="editar" onclick="location.href='{% url 'editar_livro' livro.id %}'">Editar</button>
+                    <button class="excluir" onclick="location.href='{% url 'excluir_livro' livro.id %}'">Excluir</button>
+                </div>
             </div>
-
-            <div class="botoes">
-                <button class="editar" onclick="location.href='{% url 'editar_livro' livro.id %}'">Editar</button>
-                <button class="excluir" onclick="location.href='{% url 'excluir_livro' livro.id %}'">Excluir</button>
-            </div>
-
+            {% endfor %}
         </div>
-        {% endfor %}
     </div>
+
+    <div class="swiper-btn-next" style="display: none;">❯</div>
 </div>
-
 {% endfor %}
-
 {% endblock %}
 
 {% block scripts %}
 <script>
-    document.querySelectorAll('.swiper').forEach((swiperEl) => {
-        new Swiper(swiperEl, {
+    document.querySelectorAll('.swiper-container-wrapper').forEach(wrapper => {
+        const swiperEl = wrapper.querySelector('.swiper');
+        const swiper = new Swiper(swiperEl, {
             slidesPerView: 'auto',
             spaceBetween: 10,
             loop: false,
             freeMode: false,
             resistanceRatio: 0,
             watchOverflow: true,
+            navigation: {
+                nextEl: wrapper.querySelector('.swiper-btn-next'),
+                prevEl: wrapper.querySelector('.swiper-btn-prev'),
+            },
         });
 
-        const wrapper = swiperEl.querySelector('.swiper-wrapper');
-        const dica = swiperEl.previousElementSibling.querySelector('.arraste-dica');
+        const hasScroll = swiperEl.querySelector('.swiper-wrapper').scrollWidth > swiperEl.offsetWidth;
 
-        if (wrapper.scrollWidth > wrapper.clientWidth && dica) {
-            dica.style.display = 'inline';
+        if (hasScroll) {
+            wrapper.querySelector('.swiper-btn-prev').style.display = 'flex';
+            wrapper.querySelector('.swiper-btn-next').style.display = 'flex';
+            wrapper.previousElementSibling.querySelector('.arraste-dica').style.display = 'inline';
         }
     });
 </script>

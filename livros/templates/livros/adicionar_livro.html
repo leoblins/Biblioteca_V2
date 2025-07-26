@@ -6,22 +6,117 @@
 {% block content %}
 <div class="form-container">
     <h2>Adicionar Livro</h2>
-    <form method="POST">
+
+    <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.non_field_errors }}
-        
+
+        <!-- Buscar livro automaticamente -->
+        <div class="form-group busca-capa-container" style="display: flex; align-items: center; gap: 10px;">
+            <label for="buscaLivro" style="white-space: nowrap; margin: 0;">Buscar livro automaticamente:</label>
+            <input type="text" id="buscaLivro" placeholder="Digite o nome do livro..." />
+            <button type="button" class="btn-buscar" onclick="buscarLivros()">Buscar</button>
+        </div>
+
+        <!-- Resultados das capas -->
+        <div id="capasResultado" style="margin: 10px 0; display: flex; flex-wrap: wrap; gap: 10px;"></div>
+
+        <!-- Campos do formulário -->
         {% for field in form %}
-            <div class="form-group">
-                <label for="{{ field.id_for_label }}">
-                    {{ field.label }}{% if field.field.required %} <span style="color: red;">*</span>{% endif %}
-                </label>
-                {{ field }}
-                {{ field.errors }}
-            </div>
+            {% if field.name != 'nota' %}
+                {% if field.name == 'lido' %}
+                    <div class="form-group">
+                        <div class="checkbox-alinhado">
+                            <label for="{{ field.id_for_label }}">Já leu?</label>
+                            {{ field }}
+                        </div>
+                        {{ field.errors }}
+                    </div>
+                {% else %}
+                    <div class="form-group">
+                        <label for="{{ field.id_for_label }}">
+                            {{ field.label }}{% if field.field.required %} <span style="color: red;">*</span>{% endif %}
+                        </label>
+                        {{ field }}
+                        {{ field.errors }}
+                    </div>
+                {% endif %}
+            {% endif %}
         {% endfor %}
 
-        <button type="submit" class="btn-salvar">Salvar</button>
-        <a href="{% url 'home' %}" class="btn-cancelar">Cancelar</a>
+        <div class="botoes-formulario">
+            <button type="submit" class="btn-salvar">Salvar</button>
+            <a href="{% url 'home' %}" class="btn-cancelar">Cancelar</a>
+        </div>
     </form>
 </div>
+
+<!-- Script para buscar livros e preencher campos -->
+<script>
+    function traduzirCategoria(categoria) {
+        const mapa = {
+            "Religion": "Religião",
+            "Fiction": "Ficção",
+            "Biography & Autobiography": "Biografia",
+            "History": "História",
+            "Science": "Ciência",
+            "Self-Help": "Autoajuda",
+            "Health & Fitness": "Saúde e Boa Forma",
+            "Business & Economics": "Negócios e Economia",
+            "Education": "Educação",
+            "Art": "Arte",
+            "Comics & Graphic Novels": "Quadrinhos",
+            "Juvenile Fiction": "Ficção Juvenil",
+            "Young Adult": "Jovem Adulto",
+            "Technology & Engineering": "Tecnologia e Engenharia"
+        };
+        return mapa[categoria] || categoria;
+    }
+
+    function buscarLivros() {
+        const termo = document.getElementById('buscaLivro').value;
+        const resultado = document.getElementById('capasResultado');
+        resultado.innerHTML = '';
+
+        if (!termo.trim()) {
+            alert("Digite o nome de um livro.");
+            return;
+        }
+
+        fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(termo)}`)
+            .then(res => res.json())
+            .then(data => {
+                if (!data.items) {
+                    resultado.innerHTML = '<p>Nenhum livro encontrado.</p>';
+                    return;
+                }
+
+                data.items.forEach(item => {
+                    const info = item.volumeInfo;
+                    if (info.imageLinks && info.imageLinks.thumbnail) {
+                        const img = document.createElement('img');
+                        img.src = info.imageLinks.thumbnail;
+                        img.alt = "Capa do livro";
+                        img.title = "Clique na capa para preencher os campos";
+                        img.style.cursor = 'pointer';
+                        img.style.width = '100px';
+
+                        img.onclick = () => {
+                            document.getElementById('id_nome').value = info.title || '';
+                            document.getElementById('id_autor').value = (info.authors && info.authors[0]) || '';
+                            const categoriaOriginal = (info.categories && info.categories[0]) || '';
+                            document.getElementById('id_genero').value = traduzirCategoria(categoriaOriginal);
+                            document.getElementById('id_url_capa').value = info.imageLinks.thumbnail;
+                            alert("Campos preenchidos automaticamente!");
+                        };
+
+                        resultado.appendChild(img);
+                    }
+                });
+            })
+            .catch(() => {
+                resultado.innerHTML = '<p>Erro ao buscar livros. Tente novamente.</p>';
+            });
+    }
+</script>
 {% endblock %}

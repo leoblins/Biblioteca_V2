@@ -1,9 +1,0 @@
-services:
-  - type: web
-    name: Minha-Biblioteca
-    env: python
-    buildCommand: "pip install -r requirements.txt"
-    startCommand: "./start.sh"
-    envVars:
-      - key: DJANGO_SETTINGS_MODULE
-        value: biblioteca_pai.settings

@@ -696,5 +696,145 @@ form select {
     margin: 2px 0;
 }
 
+#capasResultado img:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    transition: 0.2s ease;
+}
+.busca-capa-container input {
+    padding: 5px;
+    margin-right: 5px;
+    width: 250px;
+}
+
+#capasResultado img:hover {
+    transform: scale(1.1);
+    transition: 0.2s ease;
+    box-shadow: 0 0 8px rgba(0,0,0,0.2);
+}
+
 /* Limita o título a no máximo 2 linhas */
 
+.btn-buscar {
+    padding: 6px 12px;
+    background-color: #ccc;
+    border: 1px solid #999;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-buscar:hover {
+    background-color: #bbb;
+}
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 10px 0;
+    margin-left: 2px;
+  }
+  
+  .checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 10px 0;
+}
+.checkbox-alinhado {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+.carrossel-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.carrossel-livros {
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    display: flex;
+    gap: 10px;
+}
+
+.btn-scroll {
+    background-color: #9D9885;
+    color: white;
+    border: none;
+    font-size: 24px;
+    padding: 5px 10px;
+    cursor: pointer;
+    z-index: 10;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.btn-scroll:hover {
+    background-color: #7f796a;
+}
+
+.btn-scroll.left {
+    margin-right: 5px;
+}
+
+.btn-scroll.right {
+    margin-left: 5px;
+}
+
+.carrossel-com-setas {
+    position: relative;
+    margin-bottom: 40px;
+}
+
+/* Envolve todo o swiper + setas */
+.swiper-container-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+}
+
+/* Botões de navegação */
+.swiper-btn-prev,
+.swiper-btn-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    background-color: rgba(125, 118, 105, 0.8); /* oliva escuro com transparência */
+    color: white;
+    font-size: 22px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+    user-select: none;
+}
+
+.swiper-btn-prev:hover,
+.swiper-btn-next:hover {
+    background-color: rgba(90, 85, 75, 0.95);
+}
+
+.swiper-btn-prev {
+    left: 0;
+}
+
+.swiper-btn-next {
+    right: 0;
+}
+
+
+
+
+/* Evita barra lateral embaixo */
+.swiper {
+    overflow: hidden;
+    width: 100%;
+}

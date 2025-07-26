@@ -21,15 +21,6 @@
             <div class="logo-nome">
                 📚 <strong>Minha Biblioteca</strong>
             </div>
-            {% if request.user.is_authenticated %}
-            <div class="usuario">
-                <span>Bem-vindo, {{ request.user.username }}!</span>
-                <form action="{% url 'logout' %}" method="post" style="display: inline;">
-                    {% csrf_token %}
-                    <button type="submit" class="btn-sair">Sair</button>
-                </form>
-            </div>
-            {% endif %}
         </div>
     </header>
 
@@ -48,11 +39,12 @@
 
     <footer class="site-footer">
         <div class="footer-content">
-            <p>&copy;  Minha Biblioteca. Versão:1.0</p>
+            <p>&copy; Minha Biblioteca. Versão: 1.0</p>
             <p>Desenvolvido por Leonardo Lins Barbosa</p>
         </div>
     </footer>
 </body>
+
 {% if messages %}
   <div class="mensagens-container">
     {% for message in messages %}
