@@ -92,7 +92,7 @@
 
                 <div class="botoes">
                     <button class="editar" onclick="location.href='{% url 'editar_livro' livro.id %}'">Editar</button>
-                    <button class="excluir" onclick="location.href='{% url 'excluir_livro' livro.id %}'">Excluir</button>
+                    <button class="excluir" onclick="confirmarExclusao({{ livro.id }})">Excluir</button>
                 </div>
             </div>
             {% endfor %}
@@ -129,5 +129,11 @@
             wrapper.previousElementSibling.querySelector('.arraste-dica').style.display = 'inline';
         }
     });
+
+    function confirmarExclusao(idLivro) {
+        if (confirm("Tem certeza que deseja excluir este livro?")) {
+            window.location.href = `/excluir/${idLivro}/`;
+        }
+    }
 </script>
 {% endblock %}

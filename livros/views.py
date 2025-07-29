@@ -96,11 +96,16 @@ def editar_livro(request, pk):
 
 def excluir_livro(request, id):
     livro = get_object_or_404(Livro, id=id)
-    if request.method == 'POST':
-        livro.delete()
-        messages.success(request, 'Livro excluído com sucesso!')
-        return redirect('home')
-    return render(request, 'livros/excluir_livro.html', {'livro': livro})
+
+    # Exclui imagem da capa, se existir
+    if livro.capa and livro.capa.path:
+        if os.path.isfile(livro.capa.path):
+            os.remove(livro.capa.path)
+
+    livro.delete()
+    messages.success(request, 'Livro excluído com sucesso!')
+    return redirect('home')
+
 
 
 def detalhes_livro(request, livro_id):

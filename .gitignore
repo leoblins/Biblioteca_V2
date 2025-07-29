@@ -1,9 +1,26 @@
+# Ambiente virtual
 venv/
-__pycache__/
-*.pyc
-db.sqlite3
 .env
-*.log
 
-# Config local (não subir pro Git/Render)
-biblioteca_pai/settings_local.py
+# Arquivos de cache do Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Arquivos de banco de dados SQLite (somente se for local)
+db.sqlite3
+
+# Pastas de arquivos gerados
+media/
+staticfiles/
+
+# Arquivos temporários ou do sistema
+*.log
+.DS_Store
+Thumbs.db
+
+# Configuração local sensível
+settings_local.py
+
+# Arquivos do VSCode (opcional)
+.vscode/

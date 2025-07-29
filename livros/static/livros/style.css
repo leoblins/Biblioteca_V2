@@ -318,7 +318,7 @@ button:hover,
 
 /* ---------- HEADER ---------- */
 .topo-header {
-    background-color: #F7DDD1;
+    background-color: hsl(0, 71%, 89%);
     padding: 10px 20px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     position: sticky;
@@ -326,13 +326,7 @@ button:hover,
     z-index: 1000;
 }
 
-.limite-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-}
+
 
 .logo-nome {
     font-size: 20px;
@@ -340,27 +334,7 @@ button:hover,
     color: #9D9885;
 }
 
-.usuario {
-    font-size: 14px;
-    color: #7f796a;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
 
-.btn-sair {
-    background-color: #999b85; /* #bed39d; */
-    color: white;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 4px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.btn-sair:hover {
-    background-color: #7f796a;
-}
 
 /* ---------- FORMULÁRIOS ---------- */
 form label {
@@ -437,78 +411,6 @@ form select {
     background-color: #aaa;
 }
 
-/* ---------- LOGIN / REGISTRO ---------- */
-.login-container,
-.registro-container {
-    max-width: 450px;
-    margin: 60px auto;
-    background-color: white;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.05);
-    border: 1px solid #eee;
-    text-align: center;
-}
-
-.login-container h2,
-.registro-container h2 {
-    margin-bottom: 25px;
-    color: #9D9885;
-}
-
-.login-container label,
-.registro-container label {
-    display: block;
-    text-align: left;
-    font-weight: bold;
-    color: #7f796a;
-    margin: 10px 0 5px;
-}
-
-.login-container input,
-.registro-container input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    margin-bottom: 15px;
-    font-size: 14px;
-    box-sizing: border-box;
-}
-
-.botoes-login {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-top: 20px;
-}
-
-.btn-login,
-.btn-cadastrar {
-    background-color: #999b85; /* #bed39d; */
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 15px;
-    font-weight: bold;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    text-decoration: none;
-    display: inline-block;
-}
-
-.btn-login:hover,
-.btn-cadastrar:hover {
-    background-color: #7f796a;
-    transform: scale(1.03);
-}
-
-.erro-login {
-    color: #dc3545;
-    font-size: 14px;
-    margin-bottom: 10px;
-}
 
 /* ---------- FOOTER ---------- */
 .site-footer {
@@ -838,3 +740,5 @@ form select {
     overflow: hidden;
     width: 100%;
 }
+
+
