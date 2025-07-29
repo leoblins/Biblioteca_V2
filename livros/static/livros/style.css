@@ -741,4 +741,13 @@ form select {
     width: 100%;
 }
 
-
+/* Seção específica por local (ex: Kindle) */
+/* Aplica fundo verde menta em todas as seções de livros */
+.secao-livros {
+    background-color: #e0f7e9; /* verde menta */
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+  
